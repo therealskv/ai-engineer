@@ -18,7 +18,7 @@ The goal is to get enough footing to interrogate a vendor claim or an architectu
 
 Things that live outside this repo and won't come with a clone:
 
-- **Python 3.11+**
+- **Python 3.10+**
 - **Ollama** — needed from Lesson 2 onward. Install natively, not in Docker (containers on macOS have no Metal/GPU access, so you'd be stuck on slow CPU-only inference):
 ```bash
   curl -fsSL https://ollama.com/install.sh | sh
@@ -54,6 +54,7 @@ jupyter lab
 ---
 
 ## Layout
+
 ```
 notes.md                      the durable output — hand-written synthesis
 Track1_..._Lesson_Plan.md     the full plan: lessons, resources, checkpoints

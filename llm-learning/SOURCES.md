@@ -16,15 +16,15 @@ Last full sweep: 2026-09-13
 |---|---|---|---|---|
 | C1 | DeepLearning.AI — How Transformer LLMs Work | Lesson 3 · **primary course for this track** | https://www.deeplearning.ai/courses/how-transformer-llms-work | ✅ free |
 | C2 | Hugging Face LLM Course | Lessons 1, 3, 6 — Ch. 1–4, 6 only | https://huggingface.co/learn/llm-course/chapter1/1 | ✅ free |
-| C3 | LinkedIn Learning — Generative AI: Introduction to LLMs | Optional orientation | (search LinkedIn Learning) | ✅ free via Cox |
-| C4 | LinkedIn Learning — Generative AI: Working with LLMs | Optional orientation | (search LinkedIn Learning) | ✅ free via Cox |
+| C3 | LinkedIn Learning — Generative AI: Introduction to LLMs | Optional orientation | (search LinkedIn Learning) | ✅ - |
+| C4 | LinkedIn Learning — Generative AI: Working with LLMs | Optional orientation | (search LinkedIn Learning) | ✅ - |
 
 ## Books
 
 | ID | Title | Author | For | Status |
 |---|---|---|---|---|
 | B1 | AI Engineering | Chip Huyen | Lesson 8 · **most job-relevant item in the track** | 💰 O'Reilly |
-| B2 | Hands-On Large Language Models | Alammar & Grootendoest | Lesson 8, optional visual reference | 💰 |
+| B2 | Hands-On Large Language Models | Alammar & Grootendorst | Lesson 8, optional visual reference | 💰 |
 | B3 | ~~Build a Large Language Model from Scratch~~ | Raschka | ❌ **DELIBERATELY EXCLUDED** — builds a transformer in PyTorch. Excellent book, wrong target. | — |
 
 ## Articles & explainers
@@ -69,3 +69,41 @@ Last full sweep: 2026-09-13
 | 2 — Evaluation | Community evals study guide | https://github.com/ombharatiya/ai-system-design-guide/blob/main/ai_evals_comprehensive_study_guide.md |
 | 2/3 | AI Hero — AI Engineer Roadmap (lessons 4–7 only) | https://www.aihero.dev/ai-engineer-roadmap |
 | 3 — Agentic | AI Hero — Model Context Protocol tutorial | https://www.aihero.dev/model-context-protocol-tutorial |
+| 3 — Agentic | Build an MCP Client and Server from Scratch Using Python (Zahere, Apr 2025) | https://zahere.com/build-an-mcp-client-and-server-from-scratch-using-python |
+| 3 — Agentic | FastAPI MCP SSE Server with JWT Auth & Custom Client (Zahere, May 2025) | https://zahere.com/fastapi-mcp-sse-server-with-jwt-auth-and-custom-client |
+| 3 — Agentic | Google "Agents" white paper deep dive (Zahere, Jan 2025) | https://zahere.com/a-deep-dive-into-googles-agents-white-paper-hype-or-revolution |
+
+---
+
+## Track 2 note — eval sets are data work
+
+Building a real eval set is substantially data work: assembling, cleaning, labelling. The old "data scientists spend 80-90% of their time cleaning data" claim is less central for LLM application work than it was for classical ML, but it resurfaces here. Budget for it — eval datasets don't assemble themselves.
+
+---
+
+## Reviewed and rejected
+
+Kept so the decision doesn't get re-litigated.
+
+| Resource | Why not |
+|---|---|
+| Deep Learning Crash Course (No Starch) | Good book. Teaches building models — CNNs, GANs, diffusion. Wrong layer. |
+| Build a Large Language Model from Scratch (Raschka) | Same: PyTorch transformer implementation. Capability building, not substrate. |
+| [How I Transitioned Into an 'AI Engineer'](https://zahere.com/how-i-transitioned-into-an-ai-engineer) (Zahere, Feb 2024) | Validating but not additive, and dated — resource list is pre-agentic (LangChain app courses, prompt-engineering shorts), no eval content. Its useful parts (scope to your actual use cases; math isn't the gate) are already reflected in the plan. His *newer* MCP/agent posts are the valuable part of that site — listed above. |
+| Educative — Become a Machine Learning Engineer | Capability building. Wrong target. |
+
+### Intro-tier GenAI material (reviewed 2026-09)
+
+A set of links from around 2023 — plausibly early GenAI onboarding or E&Y-era orientation. All at or below Lesson 0 level. Recorded here so the list doesn't resurface.
+
+| Resource | Why not |
+|---|---|
+| [Introduction to Generative AI](https://www.youtube.com/watch?v=G2fqAlgmoPo) (Google Cloud, Dr. Gwendolyn Stripling) | Introductory microlearning — define GenAI, explain how it works, describe model types and applications. ~1 hr. First-day orientation for someone who's never touched this. |
+| [Introduction to Large Language Models](https://www.youtube.com/watch?v=zizonToFXDs) (Google Cloud) | Same series, same tier. |
+| [Generative AI Fundamentals](https://www.youtube.com/watch?v=1fQ1DDMmiqo) | Same tier. |
+| [Introducing Generative AI Suite by Observe.AI](https://www.youtube.com/watch?v=lAxpDfy2WHo) | Vendor product marketing, not a learning resource. *Only possible use: competitive intel on contact-centre AI — relevant to Genesys work, not to this track.* |
+| [Make flowchart with GPT](https://www.youtube.com/watch?v=TklABBggj1w) | Tooling tip. Unrelated to anything in the plan. |
+| [What are LLMs, and how are they used in GenAI?](https://www.computerworld.com/article/3697649/what-are-large-language-models-and-how-are-they-used-in-generative-ai.html) (Computerworld) | General-press explainer, written for business readers. |
+| [Generative adversarial network](https://en.wikipedia.org/wiki/Generative_adversarial_network) (Wikipedia) | **Actively off-target.** GANs are a pre-LLM image/data-generation architecture — the deep-learning-build layer this track excludes. Wouldn't inform any decision about LLM systems. |
+
+**The pattern to notice:** the gap isn't "what is generative AI" — that was answered by shipping call summarization in 2023/24. The gap is tokenization mechanics, KV cache, retrieval failure modes. Intro-tier material re-answers a question already closed.

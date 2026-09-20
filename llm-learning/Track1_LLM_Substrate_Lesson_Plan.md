@@ -1,7 +1,7 @@
 # Track 1 — LLM Substrate: Lesson Plan
 
 ## The goal
-ML equivalent of “I use AWS but don’t understand VPCs.” Substrate understanding, not model-building. Enough footing to interrogate a vendor claim or an architecture proposal instead of following its shape.
+ML equivalent of "I use AWS but don't understand VPCs." Substrate understanding, not model-building. Enough footing to interrogate a vendor claim or an architecture proposal instead of following its shape.
 
 ## Total scope
 20–30 hours, 9 lessons (0–8). No deadline. Do a lesson, stop, come back whenever.
@@ -9,25 +9,25 @@ ML equivalent of “I use AWS but don’t understand VPCs.” Substrate understa
 ## Design principle
 Hands-on first, reading second. You have no existing scaffold for LLM internals, so the exercises build the scaffold and the reading attaches to it. Reverse the order and the reading slides off.
 
-## Not in scope
-Implementing transformers, training models, PyTorch, classical data science. If a resource starts asking you to write a training loop, you’ve drifted.
+## ❌ Not in scope
+Implementing transformers, training models, PyTorch, classical data science. If a resource starts asking you to write a training loop, you've drifted.
 
 ## Source of truth
 Every external link is registered in `SOURCES.md` / `SOURCES.md` with status and last-verified date.
 
-## Where this sits in the AI-engineering stack
+## Where this sits in the AI engineering stack
 
-Chip Huyen’s three-layer model is a cleaner map than “learn AI.” Any AI-application stack has three layers, and you start at the top and move down only as needed:
+Chip Huyen's three-layer model is a cleaner map than "learn AI." Any AI-application stack has three layers, and you start at the top and move down only as needed:
 
 | Layer | What it covers | This track |
 |---|---|---|
-| Application development | Prompts, context, evaluation, interfaces | Track 2 (eval) and Track 3 (orchestration) |
-| Model development | Modeling, training, fine-tuning, inference optimization, dataset engineering | Track 1 — substrate understanding only, no tooling |
-| Infrastructure | Model serving, compute/data management, monitoring | Skipped entirely |
+| **Application development** | Prompts, context, evaluation, interfaces | Track 2 (eval) and Track 3 (orchestration) |
+| **Model development** | Modeling, training, fine-tuning, inference optimization, dataset engineering | Track 1 — substrate understanding only, no tooling |
+| **Infrastructure** | Model serving, compute/data management, monitoring | ❌ Skipped entirely |
 
-Track 1 is deliberately the “understanding” of the model-development layer without the practice of it. Huyen makes this distinction explicitly: ML knowledge is no longer a prerequisite for building AI applications — she’s met successful builders with no interest in gradient descent — but it stays valuable because it widens the set of tools available to you and helps when a model misbehaves. That’s exactly the line this track draws.
+Track 1 is deliberately the *understanding* of the model-development layer without the practice of it. Huyen makes this distinction explicitly: ML knowledge is no longer a prerequisite for building AI applications — she's met successful builders with no interest in gradient descent — but it stays valuable because it widens the set of tools available to you and helps when a model misbehaves. That's exactly the line this track draws.
 
-The other framing worth carrying: AI engineering is less about “model development” and more about **adaptation** and **evaluation**. Adaptation splits by whether you change or prompt-based techniques (no weight change) vs. fine-tuning (weight change). Keep that fork in mind through Lesson 6.
+The other framing worth carrying: AI engineering is less about model *development* and more about model **adaptation** and **evaluation**. Adaptation splits by whether weights change - prompt-based techniques (no weight change) vs. fine-tuning (weight change). Keep that fork in mind through Lesson 6.
 
 ---
 
@@ -35,19 +35,19 @@ The other framing worth carrying: AI engineering is less about “model developm
 
 ## 30 min — Reading only
 
-Read this before Lesson 1. It’s Chapter 1 of the *AI Engineering* book, published free, and it gives you the vocabulary and the layer model to hang everything else on.
+Read this before Lesson 1. It's Chapter 1 of the *AI Engineering* book, published free, and it gives you the vocabulary and the layer model to hang everything else on.
 
-- [ ] **The AI Engineering Stack** — free excerpt, *AI Engineering*  
+- [ ] **The AI Engineering Stack** — free excerpt, Ch. 1 of *AI Engineering*  
   `https://newsletter.pragmaticengineer.com/p/the-ai-engineering-stack`
 
 ## What to take from it
 
-- [ ] The three-layer stack above — know which layer you’re at in any moment.
+- [ ] The three-layer stack above — know which layer you're at in any moment.
 - [ ] AI engineering vs. ML engineering: less modeling, more adaptation and evaluation.
-- [ ] Why evaluation is harder with foundation models: open-ended outputs mean no exhaustive ground truth to compare against, unlike close-ended tasks like fraud detection.
-- [ ] The “same model” example — the same model scored 83.7% or 80.4% on the same benchmark depending purely on prompt technique. **That’s your first argument for why eval design is a real skill.**
+- [ ] Why evaluation is *harder* with foundation models: open-ended outputs mean no exhaustive ground truth to compare against, unlike close-ended tasks like fraud detection.
+- [ ] The Gemini/MMLU example — the same model scored 83.7% or 90.4% on the same benchmark depending purely on prompt technique. **This is the single best argument for why eval design is a real skill.**
 
-> Don’t read the rest of the book yet. Lesson 8.
+> *Don't read the rest of the book yet. Lesson 8.*
 
 ## Setup (once, ~10 min)
 
@@ -58,14 +58,13 @@ source .venv/bin/activate
 pip install tiktoken transformers sentence-transformers numpy jupyterlab
 ```
 
-### Install Ollama natively
-**(not Docker — no Metal/GPU access in containers on Mac, so you’d be stuck on CPU-only inference).**
+**Install Ollama natively** (not Docker — no Metal/GPU access in containers on Mac, so you'd be stuck on CPU-only inference).
 
 ```bash
-curl -fsSL [https://ollama.com/install.sh](https://ollama.com/install.sh) | sh
+curl -fsSL https://ollama.com/install.sh | sh
 ```
 
-Or download the `.dmg` manually from <https://ollama.com/download> — same thing, more conventional on a managed Mac.
+Or download the `.dmg` manually from https://ollama.com/download — same thing, more conventional on a managed Mac.
 
 Verify:
 
@@ -76,21 +75,19 @@ ollama --version
 Useful commands later:
 
 ```bash
-ollama list              # what’s installed
+ollama list              # what's installed
 ollama rm <name>         # free space
 ollama stop <name>       # stop the service
 ```
-
-> ⚠️ **On a work machine:** macOS may prompt for admin rights. If Cox endpoint management blocks it, that’s an IT conversation, not something to work around — and it’s a legitimate ask given this is platform evaluation work.
 
 Directory structure — one directory per lesson, uniformly. `notes.md` at root as the single cross-lesson artifact.
 
 ```
 ~/dev/ai-engineer/llm-learning/
 ├── .venv/
-├── notes.md                         # ← THE DURABLE OUTPUT
+├── notes.md                         # <-- THE DURABLE OUTPUT
 ├── 01-tokenizer/
-│   └── tokenizer.ipynb              # create then run
+│   └── tokenizer.ipynb              # notebook - tweak & rerun
 ├── 02-local-model/
 │   ├── observations.md              # shell + Ollama, not Python
 │   └── memory-usage.md              # screenshots
@@ -110,21 +107,21 @@ Directory structure — one directory per lesson, uniformly. `notes.md` at root 
 
 ### Notebooks vs. notes — the split that matters
 
-**Notebooks = observation layer.** Lessons 1, 4, and 5 are tweak-and-rerun by nature: change a string, see the token list; change chunk size, watch retrieval break. Put observations inline, directly under the output that provoked them. “Capitalization changes the token” is far more useful three inches below the token list than described later from memory.
+**Notebooks = observation layer.** Lessons 1, 4, and 5 are tweak-and-rerun by nature: change a string, see the token list; change chunk size, watch retrieval break. Put observations *inline, directly under the output that provoked them*. "Capitalization changes the token" is far more useful three inches below the actual token list than described later from memory.
 
-notes.md = synthesis layer. Conclusions, corrected assumptions, things you’d explain to someone else. This is what you re-read in a year. Hunting through notebooks for your own conclusions is worse than opening one markdown file.
+**`notes.md` = synthesis layer.** Conclusions, corrected assumptions, things you'd explain to someone else. This is what you re-read in a year. Hunting through notebooks for your own conclusions is worse than opening one markdown file.
 
-*In familiar terms: the notebook is the working log, `notes.md` is the design doc. Same reason architecture decisions don’t live in a Jira comment thread.*
+*In familiar terms: the notebook is the working log, `notes.md` is the design doc. Same reason architecture decisions don't live in a Jira comment thread.*
 
 **Two practical cautions:**
-- Notebook hidden state (out-of-order execution → results you can’t reproduce) is a real hazard. **Restart-and-run-all before trusting any observation.**
-- Notebooks are JSON and diff badly in Git. Another reason to keep `notes.md` separate if you want version history.
+- Notebook hidden state (out-of-order execution → results you can't reproduce) is a real hazard. **Restart-and-run-all before trusting any observation.**
+- Notebooks are JSON and diff badly in git. Another reason to keep `notes.md` separate if you want version history.
 
-**Notebooks only cover 3 of the 9 lessons.** Lessons 0 and 6 are reading-only. Lesson 2 is shell + Ollama. Lesson 7 is cost math — use a spreadsheet.
+**Notebooks only cover 3 of the 9 lessons.** Lessons 0 and 6 are reading only. Lesson 2 is shell/Ollama. Lesson 7 is cost math — use a spreadsheet.
 
-> ➡️ **Write `notes.md` by hand.** Don’t generate it. It’s the one artifact in this track that’s unambiguously your own thinking, and that’s the whole point of it.
+> ✍️ **Write `notes.md` by hand.** Don't generate it. It's the one artifact in this track that's unambiguously your own thinking, and that's the whole point of it.
 
-Disk note: the Ollama app itself is ~300MB. Models are the real cost — 3B quantized ~2GB, 8B ~5GB, 34B ~19GB. Watch `~/.ollama/models/`, and `ollama rm` what you’re done comparing.
+Disk note: the Ollama app itself is ~300MB. Models are the real cost — 3B quantized ~2GB, 8B ~5GB, 34B ~19GB. Watch `~/.ollama/models`, and `ollama rm` what you're done comparing.
 
 ---
 
@@ -147,14 +144,14 @@ for s in [
     "café",                             # accented char
     "🔥",                               # emoji
     "SELECT Id FROM Account WHERE CreatedDate = TODAY",  # SOQL/code
-    "நன்றி",                         # Tamil for “thank you”; see note below
+    "நன்றி",                         # Tamil for "thank you"; see note below
 ]:
     print(f"{s!r:50} {enc.encode(s)}")
 ```
 
 > **Why the Tamil word is in there:** `cl100k_base` and most production tokenizers were trained on a corpus that's overwhelmingly English, so the vocabulary contains whole English words as single tokens but has almost no Tamil sub-word units. Tamil text therefore falls back to near-byte-level encoding — often **several tokens per character**, versus roughly 0.75 tokens per word for English. "நன்றி" is five characters and one word, and it can cost as many tokens as a short English sentence.
 >
-> This is the fastest way to *see* that per-token pricing is not language-neutral. The same effect hits Hindi, Arabic, Thai, and CJK scripts. The practical consequences: a non-English feature can cost several times more per request than its English equivalent, it consumes the context window far faster, and it hits token limits on inputs that look short. If a Cox product ever serves non-English users, that's a real cost and capacity line item — not a rounding error.
+> This is the fastest way to *see* that per-token pricing is not language-neutral. The same effect hits Hindi, Arabic, Thai, and CJK scripts. The practical consequences: a non-English feature can cost several times more per request than its English equivalent, it consumes the context window far faster, and it hits token limits on inputs that look short.
 >
 > The SOQL line makes a smaller version of the same point: code tokenizes less efficiently than prose because identifiers, punctuation, and casing patterns fragment.
 
@@ -162,7 +159,7 @@ for s in [
 
 ```python
 for s in ["thank you", "gracias", "danke", "谢谢", "شكرا", "நன்றி"]:
-    print(f"{s!r:15} {len(enc.encode(s)):3} tokens {enc.encode(s)}")
+    print(f"{s!r:15} {len(enc.encode(s)):3} tokens  {enc.encode(s)}")
 ```
 
 **Observe and write down in notes.md:**
@@ -197,6 +194,8 @@ ollama pull llama3.2:3b
 - [ ] Run `ollama run llama3.2:3b` and watch memory usage while it generates (Activity Monitor / `htop`)
 - [ ] Notice the delay before the first token vs. the speed of subsequent tokens *(this is prefill vs. decode — Lesson 4)*
 
+> **Precision note:** quantization changes weight *values* but is **not** training. Worth keeping straight while you're comparing quantizations - you're changing the artifact, not teaching it anything.
+> 
 **Write in notes.md:** what changed about how you think about "the model" now that it's a file with a size.
 
 **Read after (~15 min):**
@@ -243,10 +242,6 @@ This is the lesson that most changes how you design systems. Context management 
 - [ ] **LLM Inference in 2026: How It Works, Latency & Cost** — https://futureagi.com/blog/llm-inference-human-prompts-2025/
   - *Prefill vs. decode is the single most useful mechanical concept in this whole track.*
 - [ ] **The LLM Inference Roadmap** (Sept 2026) — https://martinuke0.github.io/posts/2026-09-02-the-llm-inference-roadmap-i-wish-more-engineers-followed/
-  - Written for working engineers, not inference specialists. Good on why KV cache dominates memory at long context.
-
-> ⚠️ **Caveat:** most current KV-cache writing targets *inference/serving engineers* — GPU memory hierarchy, vLLM vs. TensorRT-LLM, tuning `gpu-memory-utilization`. That's operating a data center when you wanted to understand VPCs. **Read for concepts, not to act on.** If you find yourself comparing serving frameworks, stop.
-
   - Written for working engineers, not inference specialists. Good on why KV cache dominates memory at long context.
 
 > ⚠️ **Caveat:** most current KV-cache writing targets *inference/serving engineers* — GPU memory hierarchy, vLLM vs. TensorRT-LLM, tuning `gpu-memory-utilization`. That's operating a data center when you wanted to understand VPCs. **Read for concepts, not to act on.** If you find yourself comparing serving frameworks, stop.
@@ -326,7 +321,7 @@ Directly relevant to decisions you make today.
   - Why "the model generates the next token" stops being a sufficient mental model once orchestration, retrieval, memory and tool calls are involved.
 
 **Hands-on:**
-- [ ] Price out a real scenario with actual numbers — take a Cox-shaped workload (e.g. summarizing N call transcripts/day at M tokens each) and compute API cost vs. self-hosted cost
+- [ ] Price out a real scenario with actual numbers
 - [ ] Note where the crossover is, and what assumptions move it
 
 **Checkpoint:** Can I build the cost model for an AI feature without asking a vendor to do it for me?
@@ -348,7 +343,6 @@ By now the pieces exist. This lesson connects them at the altitude you actually 
 
 **Final checkpoint — the real test:**
 - [ ] Review your own notes.md. What did you believe at Lesson 1 that you'd now correct?
-- [ ] Pick a real decision at Cox involving AI (Bedrock config, a vendor claim, an Agentforce capability question). Can you now interrogate it rather than defer?
 
 ---
 
@@ -382,3 +376,4 @@ Two entries there are flagged as unverified (the YouTube series) and one as high
 - **notes.md is the actual output.** Not completion. "What surprised me" is what you'll still have in a year.
 - If a resource starts asking you to write a training loop — **wrong target, back out.**
 - Lessons 1 and 2 together are under two hours and close more of the gap than a full course. If you do nothing else, do those.
+- No deadline. Stop mid-lesson. Come back in three weeks. The plan doesn't decay.

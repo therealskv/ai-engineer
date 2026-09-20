@@ -1,0 +1,3 @@
+# .vscode — ignore everything except shared settings
+.vscode/*
+!.vscode/settings.json
