@@ -1,6 +1,35 @@
 # llm-learning
 
 ## 01-tokenizer
+- A **tokenizer** is a program that converts text into numbers that a language model can process and converts those numbers back into text
+- It sits between "human-readable words" and "the numbers the model actually computes with"
+- Models don't read letters - they do matrix math on numbers
+- Before any text reaches the model, it has to become a sequence of numbers, and after the model finishes *thinking* in numbers, those numbers have to be converted back to text for you to read
+- The tokenizer is the conversion step on both ends
+- How the tokenizer is actually used
+  - **Before a request goes to the model**: your prompt, conversation history, any documents - all of it gets tokenized into a sequence of ID numbers
+  - **While the model generates a response**: it produces its output as a sequence of token IDs, one at a time
+  - **After generation**: the tokenizer decodes those output IDs back into readable text for you to see
+  - To train a tokenizer, an algorithm is run over a huge pile of text, ahead of time, to build the fixed vocabulary table and decide which chunks of text deserve their own token
+- **Training a tokenizer**
+  - Start with the smallest possible units - individual bytes/characters, at this point every word is spelled out letter by letter
+  - Scan the entire training corpus and count: which pair of adjacent units shows up next to each other most often? Eg: `t`  next to `h` might be very common (as in 'the', 'that', 'with'...)
+  - Merge the most-frequence pair into a new single unit = `t` + `h` becomes `th`, and add it to the vocabulary
+  - Repeat: recound frequencies (now treating `th` as one unit), find the next most-frequent adjacent pair, merge it, and add it to the vocabulary
+  - Keep going, growing the vocabulary one merge at at ime, until you hit your target size - eg: 100,000 entries for `c100k_base`
+  - The output of this process is two things saved to disk
+    - the vocabulary table (chunk ↔ ID)
+    - ordered list of merge rules
+- Training the model involves a neural network adjusting billions of numerical weights via gradient descent to predict text
+- Training the tokenizer is just frequency-counting and merging on raw text
+- It's a one-time preprocessing step taht happens first, and its output then stays completely fixed for the rest of that model's life - every request you send is encoded against that same frozen table
+- **BPE (Byte-Pair Encoding)** is the most common family of algorithms for modern LLMs
+- Other algorithms include
+  - Byte-Level BPE
+  - WordPiece
+  - Unigram
+  - SentencePiece
+  - Simple word/character splitting
 - Tokenizer tokenizes a given word or sentences based on a table
 - Each entry in the table is a specific chunk of text, could be a whole common word, part of a word, a word with a space glued on, a single punctuation mark, or even a single raw byte
 - For uncommon words and nouns the tokenizer breaks them into smaller pieces that do each have an entry, and stitches those together
