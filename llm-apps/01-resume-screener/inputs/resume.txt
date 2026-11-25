@@ -1,0 +1,32 @@
+Jordan Taylor
+Atlanta, GA | (404) 555-0194 | jordan.taylor.ai@example.com | linkedin.com | github.com
+
+Summary
+
+AI Engineer with 4+ years of experience building, fine-tuning, and deploying production machine learning and LLM applications. Proven track record in Retrieval-Augmented Generation (RAG), agentic workflows, and MLOps pipelines that reduce latency and drive measurable business impact.
+
+Technical Skills
+
+• Languages & Frameworks: Python, SQL, C++, PyTorch, TensorFlow, LangChain, LangGraph, FastAPI
+• GenAI & ML: RAG, LLM Fine-Tuning (LoRA/PEFT), Vector Databases (Pinecone, pgvector), NLP, Computer Vision
+• Cloud & MLOps: AWS (SageMaker, Bedrock, EKS), Docker, Kubernetes, GitHub Actions, MLflow, CI/CD
+
+Experience
+
+AI Engineer | Northstar Cloud Systems — Atlanta, GA | Jan 2024 – Present
+• Architected a production RAG pipeline over 2M+ internal technical documents using LangGraph and Pinecone, cutting average query response time by 38% and improving answer grounding accuracy to 94%.
+• Fine-tuned open-weight LLMs with LoRA for domain-specific ticket routing, reducing manual triage time by 45% across support teams.
+• Built automated evaluation and monitoring workflows tracking hallucination rates, token cost per query, and p95 latency in production.
+Machine Learning Engineer | Peachtree Analytics — Alpharetta, GA | Jun 2022 – Dec 2023
+• Developed and deployed PyTorch and scikit-learn models for demand forecasting and anomaly detection, improving forecast accuracy by 22%.
+• Containerized ML inference services with Docker and FastAPI on AWS, scaling throughput to handle 1,500+ requests per minute with 99.9% uptime.
+• Partnered with data engineers to streamline feature pipelines in SQL and Python, cutting model training prep time by 30%.
+
+Selected Projects
+
+• Autonomous Research Agent: Built a multi-step agent using Python, LangGraph, and tool-calling APIs to gather, verify, and summarize technical reports with citation checks.
+• Vision Quality Inspector: Trained a lightweight computer vision model with PyTorch and ONNX Runtime to flag manufacturing defects in real time on edge hardware.
+
+Education
+
+B.S. in Computer Science | Georgia Institute of Technology — Atlanta, GA

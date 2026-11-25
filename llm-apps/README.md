@@ -89,7 +89,7 @@ If the API rejects a model name (these scripts are from spring), swap in a curre
 
 | # | Date | Done? | One-line note |
 |---|---|---|---|
-| 1 | | | |
+| 1 | 2026-11-24 | ✅ | Screener v0 runs, scored 6.5/10; model ignored the integer-scale spec |
 | 2 | | | |
 | 3 | | | |
 | 4 | | | |
